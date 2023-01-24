@@ -1,136 +1,144 @@
-
-# standard-calculator
-# Design a Website for Server Side Processing
+# Design of a Standard Calculator
 
 ## AIM:
-To design a website to perform mathematical calculations in server side.
+
+To design a web application for a standard calculator.
 
 ## DESIGN STEPS:
 
 ### Step 1:
-
-First fork the template repository to your git hub account and clone it in theia IDE. Now start working in the local repository.
+Create a new Django project using  "django-admin startproject",get into the project terminal  and use "python3 manage.py startapp" command.
 
 ### Step 2:
-
-Create a new project folder and a app too. Create a template for your website using HTML and CSS.
-Create appropiate view method for your template.
+Define  urls.py and views.py for the website .Allow host access and add the app name under installed 
 
 ### Step 3:
-
-Use internal CSS it is easy work with when we use only one template.
-Use POST method instead of GET inorder to gain efficiency.
+Create a templates folder under the app folder followed by a folder under templates with the app name followed by html file named calculator.html
 
 ### Step 4:
+Write HTML and CSS code in the file save it and run the app using python manage.py makemigrations and python manage.py migrate commands .Run the Server using "python3 manage.py runserver 0:80" command.
 
+### Step 5:
+ Validate the HTML and CSS code.
+### Step 6:
 Publish the website in the given URL.
 
 ## PROGRAM :
-### HTML and CSS code:
 ```
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <style type="text/css">
-        *{
-            border-radius:5px;
+<html lang="en" dir="ltr">
+
+<head>
+<meta charset="utf-8">
+<title>Simple Calculator using HTML, CSS and JavaScript</title>
+<style>
+
+    .calculator {
+    padding: 10px;
+    border-radius: 1em;
+    height: 480px;
+    width: 500px;
+    margin: auto;
+    background-color: #191b28;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    }
+    
+    .display-box {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #dcdbe1;
+    border: solid black 0.5px;
+    color: black;
+    border-radius: 5px;
+    width: 100%;
+    height: 65%;
+    }
+    
+    #btn {
+    background-color: #fb0066;
+    }
+    
+    input[type=button] {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #64278f;
+    color: white;
+    border: solid black 0.5px;
+    width: 100%;
+    border-radius: 5px;
+    height: 70%;
+    outline: none;
+    }
+    
+    input:active[type=button] {
+    background: #e5e5e5;
+    -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+    -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+    box-shadow: inset 0px 0px 5px #c1c1c1;
+    }
+</style>
+</head>
+
+<body>
+
+<table class="calculator" >
+<tr>
+<td colspan="3"> <input class="display-box" type="text" id="result" disabled /> </td>
+
+<!-- clearScreen() function clears all the values -->
+<td> <input type="button" value="C" onclick="clearScreen()" id="btn" /> </td>
+</tr>
+<tr>
+<!-- display() function displays the value of clicked button -->
+<td> <input type="button" value="1" onclick="display('1')" /> </td>
+<td> <input type="button" value="2" onclick="display('2')" /> </td>
+<td> <input type="button" value="3" onclick="display('3')" /> </td>
+<td> <input type="button" value="/" onclick="display('/')" /> </td>
+</tr>
+<tr>
+<td> <input type="button" value="4" onclick="display('4')" /> </td>
+<td> <input type="button" value="5" onclick="display('5')" /> </td>
+<td> <input type="button" value="6" onclick="display('6')" /> </td>
+<td> <input type="button" value="-" onclick="display('-')" /> </td>
+</tr>
+<tr>
+<td> <input type="button" value="7" onclick="display('7')" /> </td>
+<td> <input type="button" value="8" onclick="display('8')" /> </td>
+<td> <input type="button" value="9" onclick="display('9')" /> </td>
+<td> <input type="button" value="+" onclick="display('+')" /> </td>
+</tr>
+<tr>
+<td> <input type="button" value="." onclick="display('.')" /> </td>
+<td> <input type="button" value="0" onclick="display('0')" /> </td>
+
+<!-- calculate() function evaluates the mathematical expression -->
+<td> <input type="button" value="=" onclick="calculate()" id="btn" /> </td>
+<td> <input type="button" value="*" onclick="display('*')" /> </td>
+</tr>
+</table>
+
+<script>
+    function clearScreen() {
+        document.getElementById("result").value = "";
         }
-        body{
-            background-color: black;
+        
+        // This function display values
+        function display(value) {
+        document.getElementById("result").value += value;
         }
-        .color1{
-            background-color:grey;
+        
+        // This function evaluates the expression and returns result
+        function calculate() {
+        var p = document.getElementById("result").value;
+        var q = eval(p);
+        document.getElementById("result").value = q;
         }
-        .color2{
-            background-color: grey;
-        }
-        .color3{
-            background-color: #FF0037;
-        }
-        #calculation{
-            width:750px;
-            height:300px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 100px;
-            margin-bottom: auto;
-            border-width: 5px;
-            border-color: #fff;
-            border-style: groove;
-        }
-        .block{
-            text-align:center;
-            width:375px;
-            height:40px;
-            border-radius:0px;
-            margin-top: auto;
-            margin-bottom: auto;
-            margin-left: auto;
-            margin-right: auto;
-            background-color: grey;
-        }
-        </style>
-    </head>
-    <body>
-        <div id="calculation" class="color2" align="center">
-        <h1>Volume of Cuboid</h1>
-        <form method="POST" action="/volume/">
-            {%csrf_token%}
-            <div class="block">
-            <label for="length">Length</label>
-            <input type="text" name="length" id="length" value="{{ length }}"/>
-            </div>
-            <div class="block">
-            <label for="breadth">Breadth</label>
-            <input type="text" name="breadth" id="breadth" value="{{ breadth }}"/>
-            </div>
-            <div class="block">
-            <label for="height">Height</label>
-            <input type="text" name="height" id="height" value="{{ height }}"/>
-            </div>
-            <div class="block">
-            <input type="submit" value="Calculate volume"/>
-           </div>
-           <div class="block">
-            <label for="volume">Volume</label>
-            <input type="text" name="volume" id="volume" value="{{ volume }}"/>
-            </div>
-        </form>
-        </div>
-    </body>
+</script>
+
+</body>
+
 </html>
-```
-### server-side python program:
-```
-def volumeofcuboid(request):
-    context={}
-    context['length']="0" 
-    context['breadth']="0"
-    context['height']="0"
-    context['volume']="0"
-    if request.method=='POST':
-        print("POST method is used . . .")
-        length=request.POST.get("length",0)
-        breadth=request.POST.get("breadth",0)
-        height=request.POST.get("height",0)
-        l_num=int(length)
-        b_num=int(breadth)
-        h_num=int(height)
-
-        volume=l_num*b_num*h_num
-        context['length']=length
-        context['breadth']=breadth
-        context['height']=height       
-        context['volume']=volume
-    return render(request,"myapp/area.html",context)
-
 ```
 
 ## OUTPUT:
-![output](./value.png)
-
-
+![image](img.png)
 ## Result:
-Thus a website has been successfully created to perform mathematical calculations in server side.
-
-
+Thus we designed a web application for a standard calculator.
