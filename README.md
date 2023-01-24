@@ -139,6 +139,7 @@ Publish the website in the given URL.
 ```
 
 ## OUTPUT:
-![image](img.png)
+![img](https://user-images.githubusercontent.com/118344248/214329082-7580e6d1-90bd-4055-a949-c281b8d6aa1b.png)
+
 ## Result:
 Thus we designed a web application for a standard calculator.
